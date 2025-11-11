@@ -15,11 +15,9 @@ export default function Header() {
       <div className="border-b border-border">
         <div className="container py-4">
           <Link href="/">
-            <a className="flex items-center justify-center">
-              <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-center">
-                {APP_TITLE}
-              </h1>
-            </a>
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-center cursor-pointer hover:opacity-80 transition-opacity">
+              {APP_TITLE}
+            </h1>
           </Link>
         </div>
       </div>
@@ -32,9 +30,9 @@ export default function Header() {
             <div className="hidden md:flex items-center space-x-6 flex-1">
               {categories?.slice(0, 6).map((category) => (
                 <Link key={category.id} href={`/category/${category.slug}`}>
-                  <a className="text-sm font-medium uppercase tracking-wide hover:text-muted-foreground transition-colors">
+                  <span className="text-sm font-medium uppercase tracking-wide hover:text-muted-foreground transition-colors cursor-pointer">
                     {category.name}
-                  </a>
+                  </span>
                 </Link>
               ))}
             </div>
@@ -71,12 +69,12 @@ export default function Header() {
               <div className="flex flex-col space-y-3">
                 {categories?.map((category) => (
                   <Link key={category.id} href={`/category/${category.slug}`}>
-                    <a
-                      className="text-sm font-medium uppercase tracking-wide hover:text-muted-foreground transition-colors py-2"
+                    <span
+                      className="text-sm font-medium uppercase tracking-wide hover:text-muted-foreground transition-colors py-2 cursor-pointer block"
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       {category.name}
-                    </a>
+                    </span>
                   </Link>
                 ))}
               </div>
