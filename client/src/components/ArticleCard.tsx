@@ -14,8 +14,7 @@ export default function ArticleCard({ article, featured = false, categoryName }:
   if (featured) {
     return (
       <Link href={`/article/${article.slug}`}>
-        <a className="group block">
-          <article className="space-y-4">
+        <article className="space-y-4 group block cursor-pointer">
             {article.imageUrl && (
               <div className="aspect-[16/9] overflow-hidden bg-muted">
                 <img
@@ -42,15 +41,13 @@ export default function ArticleCard({ article, featured = false, categoryName }:
               </p>
             </div>
           </article>
-        </a>
       </Link>
     );
   }
 
   return (
     <Link href={`/article/${article.slug}`}>
-      <a className="group block">
-        <article className="space-y-3">
+      <article className="space-y-3 group block cursor-pointer">
           {article.imageUrl && (
             <div className="aspect-[4/3] overflow-hidden bg-muted">
               <img
@@ -77,7 +74,6 @@ export default function ArticleCard({ article, featured = false, categoryName }:
             </p>
           </div>
         </article>
-      </a>
     </Link>
   );
 }

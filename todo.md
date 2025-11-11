@@ -61,3 +61,4 @@
 
 ## Bug Fixes
 - [x] Fix nested anchor tag warning in Header component
+- [x] Fix remaining nested anchor tags in ArticleCard and other components
