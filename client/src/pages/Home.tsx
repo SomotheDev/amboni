@@ -1,33 +1,79 @@
-import { useAuth } from "@/_core/hooks/useAuth";
-import { Button } from "@/components/ui/button";
+import { trpc } from "@/lib/trpc";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import ArticleCard from "@/components/ArticleCard";
 import { Loader2 } from "lucide-react";
-import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
-import { Streamdown } from 'streamdown';
 
-/**
- * All content in this page are only for example, replace with your own feature implementation
- * When building pages, remember your instructions in Frontend Workflow, Frontend Best Practices, Design Guide and Common Pitfalls
- */
 export default function Home() {
-  // The userAuth hooks provides authentication state
-  // To implement login/logout functionality, simply call logout() or redirect to getLoginUrl()
-  let { user, loading, error, isAuthenticated, logout } = useAuth();
+  const { data: featuredArticles, isLoading: featuredLoading } = trpc.articles.featured.useQuery({ limit: 1 });
+  const { data: recentArticles, isLoading: recentLoading } = trpc.articles.list.useQuery({ limit: 12, offset: 0 });
+  const { data: categories } = trpc.categories.list.useQuery();
 
-  // If theme is switchable in App.tsx, we can implement theme toggling like this:
-  // const { theme, toggleTheme } = useTheme();
+  // Create a map of category IDs to names
+  const categoryMap = categories?.reduce((acc, cat) => {
+    acc[cat.id] = cat.name;
+    return acc;
+  }, {} as Record<number, string>) || {};
 
-  // Use APP_LOGO (as image src) and APP_TITLE if needed
+  if (featuredLoading || recentLoading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 flex items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  const featuredArticle = featuredArticles?.[0];
+  const otherArticles = recentArticles?.filter(a => a.id !== featuredArticle?.id) || [];
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <main>
-        {/* Example: lucide-react for icons */}
-        <Loader2 className="animate-spin" />
-        Example Page
-        {/* Example: Streamdown for markdown rendering */}
-        <Streamdown>Any **markdown** content</Streamdown>
-        <Button variant="default">Example Button</Button>
+    <div className="min-h-screen flex flex-col bg-background">
+      <Header />
+      
+      <main className="flex-1">
+        <div className="container py-8">
+          {/* Featured Article */}
+          {featuredArticle && (
+            <section className="mb-12 pb-12 border-b-2 border-foreground">
+              <ArticleCard
+                article={featuredArticle}
+                featured={true}
+                categoryName={categoryMap[featuredArticle.categoryId]}
+              />
+            </section>
+          )}
+
+          {/* Recent Articles Grid */}
+          <section>
+            <h2 className="text-2xl font-bold mb-8 pb-4 border-b border-border">Latest News</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {otherArticles.map((article) => (
+                <ArticleCard
+                  key={article.id}
+                  article={article}
+                  categoryName={categoryMap[article.categoryId]}
+                />
+              ))}
+            </div>
+          </section>
+
+          {/* Empty State */}
+          {!featuredArticle && otherArticles.length === 0 && (
+            <div className="text-center py-16">
+              <h2 className="text-2xl font-bold mb-4">No Articles Yet</h2>
+              <p className="text-muted-foreground">
+                Check back soon for the latest news from Tanzania and East Africa.
+              </p>
+            </div>
+          )}
+        </div>
       </main>
+
+      <Footer />
     </div>
   );
 }
