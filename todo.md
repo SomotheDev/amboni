@@ -65,6 +65,6 @@
 - [x] Search and fix all remaining nested anchor tags in Footer and other components
 
 ## GitHub Repository
-- [ ] Create GitHub repository
-- [ ] Commit all project files
-- [ ] Push to GitHub
+- [x] Create GitHub repository
+- [x] Commit all project files
+- [x] Push to GitHub
