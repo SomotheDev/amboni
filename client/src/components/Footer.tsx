@@ -22,22 +22,22 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/category/tanzania">
-                  <a className="text-muted-foreground hover:text-foreground transition-colors">Tanzania</a>
+                  <span className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer">Tanzania</span>
                 </Link>
               </li>
               <li>
                 <Link href="/category/business">
-                  <a className="text-muted-foreground hover:text-foreground transition-colors">Business</a>
+                  <span className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer">Business</span>
                 </Link>
               </li>
               <li>
                 <Link href="/category/politics">
-                  <a className="text-muted-foreground hover:text-foreground transition-colors">Politics</a>
+                  <span className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer">Politics</span>
                 </Link>
               </li>
               <li>
                 <Link href="/category/technology">
-                  <a className="text-muted-foreground hover:text-foreground transition-colors">Technology</a>
+                  <span className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer">Technology</span>
                 </Link>
               </li>
             </ul>
